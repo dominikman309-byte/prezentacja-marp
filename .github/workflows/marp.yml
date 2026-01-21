@@ -1,0 +1,22 @@
+name: Build Marp presentation
+
+on:
+  push:
+    paths:
+      - "slides.md"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Marp
+        run: npm install -g @marp-team/marp-cli
+      - name: Generate PowerPoint
+        run: marp slides.md --pptx
+      - name: Upload PPTX
+        uses: actions/upload-artifact@v4
+        with:
+          name: prezentacja
+          path: slides.pptx
